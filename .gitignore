@@ -3,6 +3,7 @@ env/
 *.db
 *legacy.py
 *.pyc
+*.png
 __pycache__/
 animation_extension/
 
