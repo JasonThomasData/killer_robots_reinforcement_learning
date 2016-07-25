@@ -65,7 +65,7 @@ def move_right(robot):
     return 'move_right'
 
 def fire_projectile(robot, test_environment, config):
-    new_projectile = factory.Projectile(robot.x, robot.y, robot.facing, config)
+    new_projectile = factory.Projectile(robot.x, robot.y, robot.facing)
     #projectile_behaviour.move_projectile(new_projectile) #It will never hit the shooter
     test_environment.projectiles_in_test_environment.append(new_projectile)
     return 'fire_projectile'
