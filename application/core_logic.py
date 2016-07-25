@@ -41,7 +41,7 @@ def one_moment_in_this_generation(test_environment, config, database, scenario):
         #All projectiles move, collisions detected, objects earmarked for removal from test environment
         remaining_projectiles = test_environment.projectiles_in_test_environment
         for proj_i, projectile in enumerate(remaining_projectiles):
-            projectile.x, projectile.y = projectile_behaviour.move_projectile(projectile.x, projectile.y)
+            projectile.x, projectile.y = projectile_behaviour.move_projectile(projectile.x, projectile.y, projectile.facing)
         for proj_i, projectile in enumerate(remaining_projectiles):
             projectile_behaviour.detect_move_off_test_area(projectile, test_environment)
             projectile_behaviour.detect_collision(projectile, test_environment)
