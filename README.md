@@ -162,44 +162,45 @@ The available actions and available observations that robots can make are stored
 
 #####Chasing target
 
-![Video of scenario](http://www.jason-thomas.xyz/static/assets/2016/RL_chasing_target_result.mp4)
+![Video of scenario](animation/chasing_target.mp4)
 
 This was the first scenario made for this application. This is where a robot either reaches the target location (success), takes too long (fail) or goes outside the test area (fail).
 
 Each turn, these agents could ```turn_left```, ```turn_right``` and ```move_forward```.
 	
-    Success rates spanning intervals of 48 generations
+    Success rates ending 48 generations
 
-    record_interval, test#1
-    0, 81.25
-    48, 77.08
-    96, 93.75
-    144, 85.42
-    192, 91.67
-    240, 85.42
-    288, 79.17
-    336, 89.58
-    384, 97.92
-    432, 97.92
-    480, 95.83
-    528, 95.83
-    576, 93.75
-    624, 97.92
-    672, 97.92
-    720, 93.75
-    768, 97.92
-    816, 95.83
-    864, 97.92
-    912, 100.00
-    960, 100.00
-    1008, 95.83
-    1056, 100.00
-    1104, 100.00
-    1152, 97.92
+    record_number, test#1, test#2, test#3
+    0, 0, 0, 0
+    48, 81.25, 83.33, 37.5
+    96, 77.08, 100, 83.33
+    144, 93.75, 100, 85.42
+    192, 85.42, 100, 89.58
+    240, 91.67, 100, 85.42
+    288, 85.42, 100, 87.5
+    336, 79.17, 100, 95.83
+    384, 89.58, 100, 97.92
+    432, 97.92, 100, 93.75
+    480, 97.92, 100, 97.92
+    528, 95.83, 100, 97.92
+    576, 95.83, 100, 91.67
+    624, 93.75, 100, 95.83
+    672, 97.92, 100, 93.75
+    720, 97.92, 100, 95.83
+    768, 93.75, 100, 97.92
+    816, 97.92, 100, 91.67
+    864, 95.83, 100, 95.83
+    912, 97.92, 100, 95.83
+    960, 100, 100, 91.67
+    1008, 100, 100, 97.92
+    1056, 95.83, 100, 100
+    1104, 100, 100, 95.83
+    1152, 100, 100, 97.92
+    1200, 97.92, 100, 95.83
 
 #####Destroy target
 
-![Video of scenario](http://www.jason-thomas.xyz/static/assets/2016/RL_chasing_target_result.mp4)
+![Video of scenario](animation/destroy_target.mp4)
 
 This scenario is where a robot must seek out and destroy its immobile target (success), or fall from the board or take too long (both fail).
 
@@ -207,34 +208,35 @@ The robot can ```move_forward```, ```move_left```, ```move_right```, ```move_bac
 
 I was surprised to see the robots here perform better than the robots in the chasing_target scenario.
 
-    Success rates spanning intervals of 48 generations
+    Success rates ending 48 generations
 
-    record_interval, test#1, Test#2
-    0, 45.83, 79.17
-    48, 97.92, 95.83
-    96, 100, 100
-    144, 100, 100
-    192, 100, 100
-    240, 100, 100
-    288, 100, 100
-    336, 100, 100
-    384, 100, 100
-    432, 100, 100
-    480, 100, 100
-    528, 100, 100
-    576, 100, 100
-    624, 100, 100
-    672, 100, 100
-    720, 100, 100
-    768, 100, 100
-    816, 100, 100
-    864, 100, 100
-    912, 100, 100
-    960, 100, 100
-    1008, 100, 100
-    1056, 100, 100
-    1104, 100, 100
-    1152, 100, 100
+    record_number, test#1, test#2, test#3
+    0, 0, 0, 0
+    48, 45.83, 79.17, 8.33
+    96, 97.92, 95.83, 95.83
+    144, 100, 100, 100
+    192, 100, 100, 100
+    240, 100, 100, 100
+    288, 100, 100, 100
+    336, 100, 100, 100
+    384, 100, 100, 100
+    432, 100, 100, 100
+    480, 100, 100, 100
+    528, 100, 100, 97.92
+    576, 100, 100, 100
+    624, 100, 100, 100
+    672, 100, 100, 100
+    720, 100, 100, 100
+    768, 100, 100, 100
+    816, 100, 100, 100
+    864, 100, 100, 100
+    912, 100, 100, 100
+    960, 100, 100, 100
+    1008, 100, 100, 100
+    1056, 100, 100, 100
+    1104, 100, 100, 100
+    1152, 100, 100, 100
+    1200, 100, 100, 100
 
 This scenario has the same states and actions the following scenario has.
 
