@@ -11,6 +11,7 @@ def move_projectile(projectile_x, projectile_y):
 
 def detect_move_off_test_area(projectile, test_environment):
     if projectile.x < 0 or projectile.y < 0 or projectile.x >= test_environment.wide or projectile.y >= test_environment.high:
+        print('fell off')
         if test_environment.canvas != None:
             test_environment.canvas_shapes_to_remove.append(projectile.canvas_shape)
         if projectile in test_environment.projectiles_in_test_environment:

@@ -24,7 +24,7 @@ class Target:
 
 #Robot fires these
 class Projectile:
-    def __init__(self, x, y, facing, config):
+    def __init__(self, x, y, facing):
         self.x = x
         self.y = y
         self.facing = facing
