@@ -33,7 +33,7 @@ class ChasingTargetScenario:
         test_environment.robots_in_test_environment.append(robot)
 
     def check_win_conditions(self, test_environment, robot, config):
-        if win_lose_conditions.target_reached(robot.x, robot.y, robot.target.x, robot.target.x) == True:
+        if win_lose_conditions.target_reached(robot.x, robot.y, robot.target.x, robot.target.y) == True:
             robot.result = config.success_string
             robot.result_value = 1
             test_environment.result_reached = True
