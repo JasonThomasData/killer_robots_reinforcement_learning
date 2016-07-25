@@ -1,4 +1,4 @@
-#Reinforcement learning with Python
+##Reinforcement learning with Python
 ###Or, how I made killer robots
 
 This project is an example of reinforcement learning, which is a type of machine learning. 
@@ -20,6 +20,8 @@ For that reason, my robots do not receive instant feedback. Instead, each robot 
 The important part is at the end of each generation where a robot either succeeds or fails. On a bad result, the agent/robot will iterate over its list of tuples and for each observed state, will search a database for that record and subtract a point from that move's value. For a good result, the move for each corresponding state will increment one point.
 
 This necessarily takes longer to achieve a result tha most reinforcement learning where each action would be rewarded instantly.
+
+However, I find this sandbox approach more interesting and requires less work from me to give the robot feedback each turn - to think of all the edge cases that would affect the outcome.
 
 At first these results will be poor, but after some time, we can expect the agent's cumulative success rate to approach 100%.
 
@@ -43,17 +45,13 @@ That spins up python3 inside your virtualenv. If you don't know how to initialis
 
 	source env/bin/activate
 
-And finally:
-
-	pip install -r requirements.txt
-
 Pip will install PyMovie and pytest, and any dependencies those need.
 
 ###Testing
 
 To run tests for this project, navigate to the tests folder and run this command from the terminal:
 
-	py.test test_robot_sensors.py 
+	py.test test_robot_sensors.py test_robot_actions.py test_win_lose_conditions.py
 
 ###Usage
 
@@ -79,7 +77,7 @@ Here is a toplevel view of the program.
         run_application.py
         config_application.py
         database/
-            chasing_target.db
+            chasing_target.db #can be deleted to start new test series
             destroy_target.db
         application/
             animation_control.py
@@ -109,13 +107,15 @@ The interface for the human user is ```run_application.py```. The ```database```
 
 The ```core_logic.py``` module receives the database, config and scenario objects, and processes the (I suppose you would say) game loop. 
 
-The ```animation_control.py``` module takes the contents of ```tmp_frames/``` and converts those to a video, and deletes contents of ```tmp_frames/```. This is the only module not run inside the ```core_logic.py``` module, as it's a seperate concern from the machine learning task.
+The ```animation_control.py``` module takes the contents of ```tmp_frames/``` and converts those to a video, and deletes contents of ```tmp_frames/```. This is one of two modules not run from the ```core_logic.py``` module, as it's a seperate concern from the machine learning task.
+
+The ```report_writer.py``` module returns statistics to the terminal. One of two modules not run from the ```core_logic.py``` module.
 
 The ```factory.py``` has classes for target, robot and projectile objects.
 
 The ```game_environment.py``` has the class that contains the world where the robots live. That object has lists where all other objects are referenced. The world object is passed to other modules.
 
-The ```visual_display.py``` file renders the objects to a canvas so those can be saved as ```tmp_frames```.
+The ```visual_display.py``` file renders the objects to a canvas so those can be saved in ```tmp_frames```.
 
 The scenarios folder contains modules with classes that receive the ```test_environment``` object as a paramter, and adds new instances of robots and targets accordingly. The scenario objects also have a function to check win conditions.
 
@@ -125,34 +125,32 @@ This project uses ```SQLite3```, which comes out of the box in Python.
 
 Each scenario has its own ```.db``` file and each of those has two tables - a records table and a log table.
 
-The queries the database uses are in the database object, which is in the config file, and that object has a key. The functions that executive queries will check for those keys.
-
 I am using integers to save the instances of what agents can observe, as intagers are easier/more efficient to search for than strings.
 
 If the ```chasing_target scenario``` database was a csv file, this is what it would look like:
 
-    state_int, turn_left, turn_right, move
-    101, -3, 3, 0
-    210, -2, -9, 10
-    311, 5, -2, 4
+    state_int, turn_left, turn_right, move_forward
+    13604, -3, 3, 0
+    12104, -2, -9, 10
+    13114, 5, -2, 4
 
-So if an agent observes its board and decides the board corresponds to the ```state_int``` of ```101``` then previous results tells the agent the best result is ```turn_right```, which depending on how advanced the machine's memory is, may or may not be the best thing to do.
+So if an agent observes its board and decides the board corresponds to the ```state_int``` of ```10104``` then previous results tells the agent the best result is ```turn_right```, which depending on how advanced the machine's memory is, may or may not be the best thing to do.
 
-All scenarios can share this schema, and scenarios that don't have certain actions as possibilities for the agents can just have extra zeros in those columns. Extra actions like ```fire_projectile``` can be added as new columns. Each state_int will have a 1 on front, and it's meaningless - but we can't have zeros dropping off the front of ```state_int```.
+All scenarios can share this schema, and scenarios that don't have certain actions as possibilities for the agents can just have extra zeros in those columns. Extra actions like ```fire_projectile``` can be added as new columns.
 
 ###Robot observations
 
-Each robot, before making an action, can observe the state of its environment. For now, the state_int field (primary key for database) for all robots in all scenarios is -
+Each robot, before making an action, can observe the state of its environment. For now, the ```state_int``` field (primary key for database) for all robots in all scenarios is -
 
 	robot_id, target_direction, robot_health
 
-So for robot with robot_id 1 that has a target directly in front, with health of 4, the state int will be `10004`.
+So for robot with robot_id 1 that has a target directly in front, with health of 4, the state int will be `13604`.
 
 The target direction needs explaining here. The robot knows which direction is facing and can learn which direction its target is in. However, for the purposes of evaluating its own environment, the robot only cares if its target is in front, left, right or behind, etc.
 
-So this is managed by using triganometry to get the compass angle of the target with the robot at at compass centre. If the target is facing east, for example, and its target is north then that's the same state as the robot facing north and its target west. So the target's direction is reduced to the context of the robot facing north. For a target east of a robot, where the robot is facing west, we give the robot a direction string of 180, as it's the same as a robot facing north and having its direction south. If the context of the robot's facing direction was not changed, there would be many more records in each database.
+So this is managed by using triganometry to get the compass angle of the target with the robot at at compass centre. If the robot is facing east, for example, and its target is north then that's the same state as the robot facing north and its target west. So the target's direction is reduced to the context of the robot facing north. For a target east of a robot, where the robot is facing west, we give the robot a direction string of 180, as it's the same as a robot facing north and having its direction south. If the context of the robot's facing direction was not changed, there would be many more (I think 4 times as many) records in each database.
 
-The directions are three character strings that are rounded up to the nearest integer. 
+The directions are three character strings that are rounded up to the nearest integer, with a 0 in front. 
 
 There are eight directions that represent targets directly in those directions - North (360), North-East (045), East (090), South-East (135), South (180), South-West (225), West (270), North-West (315).
 
@@ -160,7 +158,7 @@ Where a robot's target is in between those points, the target's direction is ret
 
 ###Scenarios
 
-The available actions and available observations that robots can make are stored in the relevant config objects, inside the ```config_application.py``` module. Each scenario is created as a parameter bu the main ```run_application``` interface. Those scenario objects are passed to the ```core_logic``` module, and passed off to every other module from there.
+The available actions and available observations that robots can make are stored in the relevant config objects, inside the ```config_application.py``` module. Each scenario object is created and passed as a parameter from the main ```run_application.py```interface to the ```core_logic.py``` module. 
 
 #####Chasing target
 
@@ -172,7 +170,7 @@ Each turn, these agents could ```turn_left```, ```turn_right``` and ```move_forw
 	
     Success rates spanning intervals of 48 generations
 
-    record_limit, test#1
+    record_interval, test#1
     0, 81.25
     48, 77.08
     96, 93.75
@@ -199,7 +197,6 @@ Each turn, these agents could ```turn_left```, ```turn_right``` and ```move_forw
     1104, 100.00
     1152, 97.92
 
-
 #####Destroy target
 
 ![Video of scenario](http://www.jason-thomas.xyz/static/assets/2016/RL_chasing_target_result.mp4)
@@ -212,38 +209,38 @@ I was surprised to see the robots here perform better than the robots in the cha
 
     Success rates spanning intervals of 48 generations
 
-    record_limit, test#1
-    0, 45.83
-    48, 97.92
-    96, 100.00
-    144, 100.00
-    192, 100.00
-    240, 100.00
-    288, 100.00
-    336, 100.00
-    384, 100.00
-    432, 100.00
-    480, 100.00
-    528, 100.00
-    576, 100.00
-    624, 100.00
-    672, 100.00
-    720, 100.00
-    768, 100.00
-    816, 100.00
-    864, 100.00
-    912, 100.00
-    960, 100.00
-    1008, 100.00
-    1056, 100.00
-    1104, 100.00
-    1152, 100.00
+    record_interval, test#1, Test#2
+    0, 45.83, 79.17
+    48, 97.92, 95.83
+    96, 100, 100
+    144, 100, 100
+    192, 100, 100
+    240, 100, 100
+    288, 100, 100
+    336, 100, 100
+    384, 100, 100
+    432, 100, 100
+    480, 100, 100
+    528, 100, 100
+    576, 100, 100
+    624, 100, 100
+    672, 100, 100
+    720, 100, 100
+    768, 100, 100
+    816, 100, 100
+    864, 100, 100
+    912, 100, 100
+    960, 100, 100
+    1008, 100, 100
+    1056, 100, 100
+    1104, 100, 100
+    1152, 100, 100
 
 This scenario has the same states and actions the following scenario has.
 
 #####Killer robots
 
-To do. - This is the point and final result behind this entire project.
+To do... this is the point and intended result behind this entire project. Previous scenarios are effectively tests.
 
 I'm most interested in creating an environment where agents can face each other in an arena.
 

@@ -16,8 +16,8 @@ class ConfigChasingTarget(ConfigCommon):
         self.random_threshold = 1      #If a random number is higher than this, do a random action - not used so far, consider removing
         self.max_moves_modifier = 1.5      #This many times larger than the test_area's area, which is test_area_width ^ 2
         self.database_location = 'database/chasing_target.db'
-        self.animate_on_multiple = 100      #Animate on the nth generation
-        self.animate_these_frames = [10, 25, 50, 75, 150]      #Animate on the these generations
+        self.animate_on_multiple = 500      #Animate on the nth generation
+        self.animate_these_frames = [10, 20, 30, 40, 50, 75, 125, 150, 200, 250, 300, 400]      #Animate on the these generations
         self.animation_folder = 'animation/chasing_target/'
         self.available_actions = ['turn_left', 'turn_right', 'move_forward']
         self.success_string = 'reached_target'
@@ -30,8 +30,8 @@ class ConfigDestroyTarget(ConfigCommon):
         self.random_threshold = 1      #If a random number is higher than this, do a random action - not used so far, consider removing
         self.max_moves_modifier = 1.5      #This many times larger than the test_area's area, which is test_area_width ^ 2
         self.database_location = 'database/destroy_target.db'
-        self.animate_on_multiple = 100      #Animate on the nth generation
-        self.animate_these_frames = [10, 25, 50, 75, 150]      #Animate on the these generations
+        self.animate_on_multiple = 500      #Animate on the nth generation
+        self.animate_these_frames = [10, 20, 30, 40, 50, 75, 125, 150, 200, 250, 300, 400]      #Animate on the these generations
         self.animation_folder = 'animation/destroy_target/'
         self.available_actions = ['turn_left', 'turn_right', 'fire_projectile',
                                 'move_forward', 'move_left', 'move_right']
