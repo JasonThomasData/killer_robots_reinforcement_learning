@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from scenarios import chasing_target, destroy_target
+from scenarios import chasing_target, destroy_target, killer_bots
 from application import video_control, core_logic, report_writer
 import config_application
 import sys
@@ -15,13 +15,16 @@ def do_scenario(scenario_chosen):
         database = config_application.DatabaseConfig(config)
         scenario = chasing_target.ChasingTargetScenario()
         core_logic.process_scenario(config, database, scenario)
-
     elif scenario_chosen == 'destroy_target':
         config = config_application.ConfigDestroyTarget()
         database = config_application.DatabaseConfig(config)
         scenario = destroy_target.DestroyTargetScenario()
         core_logic.process_scenario(config, database, scenario)
-
+    elif scenario_chosen == 'killer_bots':
+        config = config_application.ConfigKillerBots()
+        database = config_application.DatabaseConfig(config)
+        scenario = killer_bots.KillerBotsScenario()
+        core_logic.process_scenario(config, database, scenario)        
     else:
         print('%s is not a valid scenario' %(scenario_chosen))
 
@@ -30,12 +33,14 @@ def make_report(scenario_chosen):
         config = config_application.ConfigChasingTarget()
         database = config_application.DatabaseConfig(config)
         report_writer.make_report(database, config.success_string)
-
     elif scenario_chosen == 'destroy_target':
         config = config_application.ConfigDestroyTarget()
         database = config_application.DatabaseConfig(config)
         report_writer.make_report(database, config.success_string)
-
+    elif scenario_chosen == 'killer_bots':
+        config = config_application.ConfigKillerBots()
+        database = config_application.DatabaseConfig(config)
+        report_writer.make_report(database, config.success_string)
     else:
         print('%s is not a valid scenario' %(scenario_chosen))
 
