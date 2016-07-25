@@ -50,7 +50,7 @@ class ConfigKillerBots(ConfigCommon):
         self.animation_folder = 'animation/killer_bots/'
         self.available_actions = ['turn_left', 'turn_right', 'fire_projectile',
                                 'move_forward', 'move_left', 'move_right']
-        self.success_string = 'target_destroyed'
+        self.success_string = 'this_bot_destroyed_target'
         self.projectiles_move_per_turn = 3
 
 class DatabaseConfig(object):
