@@ -5,7 +5,7 @@ class ConfigCommon(object):
         self.test_area_width = 15
         self.robot_starting_health = 4
         self.available_directions = ['north', 'east', 'south', 'west']
-        self.render_spaces_width = 24      #Robot, target, test_area spaces width
+        self.render_spaces_width = 48      #Robot, target, test_area spaces width
         self.robot_arc_extent = 270      #Out of 360. Robots have a gap missing on their front sides
         self.robot_arc_start = 45
 

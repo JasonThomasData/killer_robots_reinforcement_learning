@@ -41,10 +41,10 @@ def one_moment_in_this_generation(test_environment, config, database, scenario):
         #All projectiles move, collisions detected, objects earmarked for removal from test environment
         remaining_projectiles = test_environment.projectiles_in_test_environment
         for proj_i, projectile in enumerate(remaining_projectiles):
-            projectile_behaviour.move_projectile(projectile)
+            projectile.x, projectile.y = projectile_behaviour.move_projectile(projectile.x, projectile.y)
         for proj_i, projectile in enumerate(remaining_projectiles):
-            projectile_behaviour.detect_move_off_test_area(proj_i, projectile, test_environment)
-            projectile_behaviour.detect_collision(proj_i, projectile, test_environment)
+            projectile_behaviour.detect_move_off_test_area(projectile, test_environment)
+            projectile_behaviour.detect_collision(projectile, test_environment)
 
         remove_destroyed_robots(test_environment)
         remove_destroyed_targets(test_environment)
@@ -52,7 +52,6 @@ def one_moment_in_this_generation(test_environment, config, database, scenario):
         if test_environment.generation_animation != None:
             visual_display.animate_move(test_environment, config)
             video_control.save_frame(test_environment, config)
-
 
 def one_generation(generation_number, config, database, scenario):
     
