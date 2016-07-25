@@ -36,7 +36,7 @@ def one_moment_in_this_generation(test_environment, config, database, scenario):
         robot_decisions.create_record(robot, state_int, action_this_turn)
 
     #The robots, above, can move once per turn, while projectiles move as many spaces per turn as the user sets in the config file
-    for _ in range(config.projectiles_move_per_turn):
+    for _ in range(config.projectiles_move_per_moment):
         test_environment.animation_frame_count += 1
         #All projectiles move, collisions detected, objects earmarked for removal from test environment
         remaining_projectiles = test_environment.projectiles_in_test_environment
