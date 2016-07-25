@@ -21,7 +21,7 @@ class ConfigChasingTarget(ConfigCommon):
         self.animation_folder = 'animation/chasing_target/'
         self.available_actions = ['turn_left', 'turn_right', 'move_forward']
         self.success_string = 'reached_target'
-        self.projectiles_move_per_turn = 1
+        self.projectiles_move_per_moment = 1
 
 class ConfigDestroyTarget(ConfigCommon):
     def __init__(self):
@@ -36,7 +36,7 @@ class ConfigDestroyTarget(ConfigCommon):
         self.available_actions = ['turn_left', 'turn_right', 'fire_projectile',
                                 'move_forward', 'move_left', 'move_right']
         self.success_string = 'target_destroyed'
-        self.projectiles_move_per_turn = 3
+        self.projectiles_move_per_moment = 3
 
 class ConfigKillerBots(ConfigCommon):
     def __init__(self):
@@ -51,7 +51,7 @@ class ConfigKillerBots(ConfigCommon):
         self.available_actions = ['turn_left', 'turn_right', 'fire_projectile',
                                 'move_forward', 'move_left', 'move_right']
         self.success_string = 'this_bot_destroyed_target'
-        self.projectiles_move_per_turn = 3
+        self.projectiles_move_per_moment = 3
 
 class DatabaseConfig(object):
     def __init__(self, config):
