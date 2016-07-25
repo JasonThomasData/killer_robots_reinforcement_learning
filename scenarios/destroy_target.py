@@ -3,7 +3,7 @@ from application import factory, win_lose_conditions
 
 #This object will not contain any states. Those are in the config module
 
-class DestroyTargetScenario:
+class DestroyTargetScenario(object):
     
     def add_objects_to_environment(self, test_environment, config):
         self.add_target_to_environment(test_environment)

@@ -3,7 +3,7 @@ from application import factory, win_lose_conditions
 
 #This object will not contain any states. Those are in the config module
 
-class DestroyTargetScenario:
+class KillerBotsScenario(object):
     
     def add_objects_to_environment(self, test_environment, config):
         self.add_first_robot_to_environment(test_environment, config)
@@ -47,6 +47,10 @@ class DestroyTargetScenario:
         if win_lose_conditions.object_destroyed(robot.hit_points) == True:
             robot.result = 'this_bot_destroyed_by_opponent'
             robot.result_value = -2
+            test_environment.result_reached = True
+        if win_lose_conditions.target_reached(robot.x, robot.y, robot.target.x, robot.target.y) == True:
+            robot.result = 'bots_collided'
+            robot.result_value = -1
             test_environment.result_reached = True
         if win_lose_conditions.fall_off_test_area(robot.x, robot.y, test_environment.wide, test_environment.high) == True:
             robot.result = 'this_bot_fell_off'
