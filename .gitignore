@@ -1,0 +1,8 @@
+env/
+*.cache
+*.db
+*legacy.py
+*.pyc
+__pycache__/
+animation_extension/
+
