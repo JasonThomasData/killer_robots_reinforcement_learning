@@ -1,17 +1,16 @@
-def move_projectile(projectile_x, projectile_y):
-    if projectile.facing == 'north':
+def move_projectile(projectile_x, projectile_y, projectile_facing):
+    if projectile_facing == 'north':
         projectile_y += 1
-    elif projectile.facing == 'east':
+    elif projectile_facing == 'east':
         projectile_x += 1
-    elif projectile.facing == 'south':
+    elif projectile_facing == 'south':
         projectile_y -= 1
-    elif projectile.facing == 'west':
+    elif projectile_facing == 'west':
         projectile_x -= 1
     return projectile_x, projectile_y
 
 def detect_move_off_test_area(projectile, test_environment):
     if projectile.x < 0 or projectile.y < 0 or projectile.x >= test_environment.wide or projectile.y >= test_environment.high:
-        print('fell off')
         if test_environment.canvas != None:
             test_environment.canvas_shapes_to_remove.append(projectile.canvas_shape)
         if projectile in test_environment.projectiles_in_test_environment:
