@@ -3,7 +3,7 @@ env/
 *.db
 *legacy.py
 *.pyc
-*.png
+tmp_frames/
 __pycache__/
 animation_extension/
 
