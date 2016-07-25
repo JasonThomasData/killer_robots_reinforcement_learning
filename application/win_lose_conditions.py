@@ -3,7 +3,7 @@ def target_reached(robot_x, robot_y, target_x, target_y):
         return True
     return False
 
-def target_destroyed(target_hit_points):
+def object_destroyed(target_hit_points):
     if target_hit_points <= 0:
         return True
     return False

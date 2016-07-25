@@ -28,17 +28,17 @@ def test_target_reached_6():
 def test_target_reached_7():
     assert win_lose_conditions.target_reached(3, -2, 3, 2) == False
 
-def test_target_destroyed_1():
-    assert win_lose_conditions.target_destroyed(4) == False
+def test_object_destroyed_1():
+    assert win_lose_conditions.object_destroyed(4) == False
 
-def test_target_destroyed_2():
-    assert win_lose_conditions.target_destroyed(2) == False
+def test_object_destroyed_2():
+    assert win_lose_conditions.object_destroyed(2) == False
 
-def test_target_destroyed_3():
-    assert win_lose_conditions.target_destroyed(0) == True
+def test_object_destroyed_3():
+    assert win_lose_conditions.object_destroyed(0) == True
 
-def test_target_destroyed_4():
-    assert win_lose_conditions.target_destroyed(-2) == True
+def test_object_destroyed_4():
+    assert win_lose_conditions.object_destroyed(-2) == True
 
 def test_fell_off_1():
     assert win_lose_conditions.fall_off_test_area(4, 4, 11, 11) == False
