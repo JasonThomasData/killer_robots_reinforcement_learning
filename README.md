@@ -162,6 +162,7 @@ The available actions and available observations that robots can make are stored
 
 #####Chasing target
 
+See video -
 [![Chasing target scenario](animation/chasing_target.png)](https://www.youtube.com/watch?v=2zhjBBFzuT0)
 
 This was the first scenario made for this application. This is where a robot either reaches the target location (success), takes too long (fail) or goes outside the test area (fail).
@@ -200,6 +201,7 @@ Each turn, these agents could ```turn_left```, ```turn_right``` and ```move_forw
 
 #####Destroy target
 
+See video -
 [![Destroy target scenario](animation/destroy_target.png)](https://www.youtube.com/watch?v=41a4MUtF9ts)
 
 This scenario is where a robot must seek out and destroy its immobile target (success), or fall from the board or take too long (both fail).
