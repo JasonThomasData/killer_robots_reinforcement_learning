@@ -33,7 +33,7 @@ class DestroyTargetScenario(object):
         test_environment.robots_in_test_environment.append(robot)
 
     def check_win_conditions(self, test_environment, robot, config):
-        if win_lose_conditions.target_destroyed(robot.target.hit_points) == True:
+        if win_lose_conditions.object_destroyed(robot.target.hit_points) == True:
             robot.result = config.success_string
             robot.result_value = 1
             test_environment.result_reached = True
