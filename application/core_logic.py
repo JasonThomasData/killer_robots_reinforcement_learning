@@ -23,7 +23,7 @@ def end_this_generation(test_environment, database):
     #All robots update robot memory
     #If you're wondering, I made the robot's result null on purpose, since None will not be as easy to debug
     for robot in test_environment.robots_in_test_environment:
-        print('%s, %s' %(test_environment.generation_number, robot.result))
+        print('%s, %s, %s' %(test_environment.generation_number, robot.colour, robot.result))
         if robot.result != 'null':
             robot_decisions.save_all_states_to_db(test_environment.generation_number, robot, database, test_environment.steps_this_generation)
 
@@ -31,8 +31,7 @@ def one_moment_in_this_generation(test_environment, config, database, scenario):
     test_environment.steps_this_generation += 1
 
     for robot in test_environment.robots_in_test_environment:
-        state_int = robot_sensors.get_state_int(robot, test_environment)
-        action_this_turn = robot_decisions.take_action(robot, state_int, config, database, test_environment)
+        state_int, action_this_turn = robot_decisions.take_action(robot, config, database, test_environment)
         scenario.check_win_conditions(test_environment, robot, config)
         robot_decisions.create_record(robot, state_int, action_this_turn)
 
@@ -60,14 +59,17 @@ def one_generation(generation_number, config, database, scenario):
     test_environment = game_environment.TestEnvironment(generation_number, config.test_area_width, config.test_area_width)
     scenario.add_objects_to_environment(test_environment, config)
 
+
     #Render test_environment every nth generation
-    if test_environment.generation_number % config.animate_on_multiple == 0 or test_environment.generation_number in config.animate_these_frames:
-        successes, total = robot_memory.retreive_statistics_total(database, config.success_string)
-        if successes != 0 and total != 0:
-            success_rate = "%.2f pc" %((successes/total)*100)
-        else:
-            success_rate = 'NA'
-        visual_display.create_animation(success_rate, test_environment, config)
+#    if test_environment.generation_number % config.animate_on_multiple == 0 or test_environment.generation_number in config.animate_these_frames:
+#        successes, total = robot_memory.retreive_statistics_total(database, config.success_string)
+#        if successes != 0 and total != 0:
+#            success_rate = "%.2f pc" %((successes/total)*100)
+#        else:
+#            success_rate = 'NA'
+#        visual_display.create_animation(success_rate, test_environment, config)
+
+#Removing these for console run
 
     #All robots take a turn, projectiles move
     while test_environment.result_reached == False:
@@ -78,7 +80,7 @@ def one_generation(generation_number, config, database, scenario):
 def process_scenario(config, database, scenario):
 
     print('~~~')
-    print('generation_num, result')
+    print('generation_num, robot_colour, result')
 
     _, total_record_number = robot_memory.retreive_statistics_total(database, config.success_string)
     for generation_number in range(total_record_number, total_record_number + config.generations_to_process):
