@@ -75,32 +75,38 @@ Here is a toplevel view of the program.
 
     python_reinforcement_learning/
         README.md
-        requirements.txt
         run_application.py
         config_application.py
         database/
             chasing_target.db #can be deleted to start new test series
             destroy_target.db
+            killer_bots
         application/
             animation_control.py
+            corde_logic.py
             factory.py
             game_environment.py
+            report_writer.py
             projectile_behaviour.py
-            robot_decisions.py
             robot_actions.py
-            robot_memory.py
             robot_decisions.py
-            win_lose_conditions.py
+            robot_memory.py
+            robot_sensors.py
+            video_control.py
             visual_display.py
+            win_lose_conditions.py
             __init__.py
         scenarios/
             chasing_target.py
             destroy_target.py
+            killer_bots.py
             __init__.py
         animation/
             chasing_target/
                 tmp_frames/
             destroy_target/
+                tmp_frames/
+            killer_bots/
                 tmp_frames/
 
 Most functions that objects use are public functions stored in modules. To make a robot perform any action, you will need to pass the instance of that robot into the function as a parameter.
@@ -157,6 +163,8 @@ The directions are three character strings that are rounded up to the nearest in
 There are eight directions that represent targets directly in those directions - North (360), North-East (045), East (090), South-East (135), South (180), South-West (225), West (270), North-West (315).
 
 Where a robot's target is in between those points, the target's direction is returned as in between. For example, for a target at (033), which is in between North and North-East, the direction is returned as the closest whole integer to North-North-East, which is (023).
+
+In the ```killer_bots``` scenarios, the robots were also given sensors for detecting a target next to the robot, or whether the robot is on the edge of the board.
 
 ###Scenarios
 
@@ -269,6 +277,6 @@ One thing I'm not really happy with is how the animation is accomplished. This i
 
 This was the least important aspect of my application so I didn't spend too much time on this, but it's a little messy. 
 
-Another option might be to save the board states to a list of states and then render those at the end and use a screen capture, but honestly that's also a messy approach.
+Another option might be to save the board states to a list of states and then render those at the end and use a screen capture, but honestly that's also a messy approach. Still, I think it's better.
 
 I was suprised making canvas animations in Python was this difficult and will research better methods.
