@@ -51,19 +51,34 @@ def get_direction_in_buckets(target_direction_degrees):
         return 293 #math.ceil((0+45)/2)
     elif target_direction_degrees > 315 and target_direction_degrees < 360:
         return 338 #math.ceil((0+45)/2)
-    
+
     #The numbers in between the main 8 points - 360(N), 45(NE), 90(E), 135(SE), 180(S), 225(SW), 270(W), 315(NW) - take the median value in that range, rounded up to the nearest integer
     return target_direction_degrees
 
 
-def get_target_direction_string(robot, target):
+def get_target_direction_index(robot, target):
     target_direction_degrees = get_target_compass_direction(robot.x, robot.y, robot.target.x, robot.target.y)
     target_direction_offset = get_direction_facing_offset(robot.facing, target_direction_degrees)
     target_direction_buckets = get_direction_in_buckets(target_direction_offset)
     return '%03d' %(target_direction_buckets)
 
+def get_border_touching_index(robot_x, robot_y, test_environment_wide, test_environment_high):
+    borders_touching = 0
+    if robot_x == 0 or robot_x == test_environment_wide - 1:
+        borders_touching += 1
+    if robot_y == 0 or robot_y == test_environment_high - 1:
+        borders_touching += 1
+    return borders_touching
 
-def get_state_int(robot, config):
-    target_direction_string = get_target_direction_string(robot, robot.target)
-    int_string = '%s%s%s' %(robot.id_number, target_direction_string, robot.hit_points)
+def get_target_next_to_index(robot_x, robot_y, target_x, target_y):
+    target_next_to = 0
+    if abs(robot_x - target_x) <= 1 and abs(robot_y - target_y) <= 1:
+        target_next_to = 1
+    return target_next_to
+
+def get_state_int(robot, test_environment):
+    target_direction_index = get_target_direction_index(robot, robot.target)
+    borders_touching_index = get_border_touching_index(robot.x, robot.y, test_environment.wide, test_environment.high)
+    target_next_to_index = get_target_next_to_index(robot.x, robot.y, robot.target.x, robot.target.y)
+    int_string = '%s%s%s%s%s' %(robot.id_number, target_direction_index, borders_touching_index, target_next_to_index, robot.hit_points)
     return int_string
