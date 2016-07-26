@@ -62,13 +62,58 @@ def get_target_direction_index(robot, target):
     target_direction_buckets = get_direction_in_buckets(target_direction_offset)
     return '%03d' %(target_direction_buckets)
 
-def get_border_touching_index(robot_x, robot_y, test_environment_wide, test_environment_high):
-    borders_touching = 0
-    if robot_x == 0 or robot_x == test_environment_wide - 1:
-        borders_touching += 1
-    if robot_y == 0 or robot_y == test_environment_high - 1:
-        borders_touching += 1
-    return borders_touching
+#This function is rather large - can we fix this to have less duplication? Prettier?
+def get_border_touching_index(robot_x, robot_y, robot_facing, test_environment_wide, test_environment_high):
+    borders_touching_front = 0
+    borders_touching_right = 0
+    borders_touching_back = 0
+    borders_touching_left = 0
+
+    if robot_facing == 'north':
+        if robot_y == test_environment_high - 1:
+            borders_touching_front = 1
+        elif robot_y == 0:
+            borders_touching_back = 1
+
+        if robot_x == test_environment_wide - 1:
+            borders_touching_right = 1
+        elif robot_x == 0:
+            borders_touching_left = 1
+
+    elif robot_facing == 'east':
+        if robot_y == test_environment_high - 1:
+            borders_touching_left = 1
+        elif robot_y == 0:
+            borders_touching_right = 1
+
+        if robot_x == test_environment_wide - 1:
+            borders_touching_front = 1
+        elif robot_x == 0:
+            borders_touching_back = 1
+
+    elif robot_facing == 'south':
+        if robot_y == test_environment_high - 1:
+            borders_touching_back = 1
+        elif robot_y == 0:
+            borders_touching_front = 1
+
+        if robot_x == test_environment_wide - 1:
+            borders_touching_left = 1
+        elif robot_x == 0:
+            borders_touching_right = 1
+
+    elif robot_facing == 'west':
+        if robot_y == test_environment_high - 1:
+            borders_touching_right = 1
+        elif robot_y == 0:
+            borders_touching_left = 1
+
+        if robot_x == test_environment_wide - 1:
+            borders_touching_back = 1
+        elif robot_x == 0:
+            borders_touching_front = 1
+
+    return '%s%s%s%s' %(borders_touching_front, borders_touching_right, borders_touching_back, borders_touching_left)
 
 def get_target_next_to_index(robot_x, robot_y, target_x, target_y):
     target_next_to = 0
@@ -78,7 +123,7 @@ def get_target_next_to_index(robot_x, robot_y, target_x, target_y):
 
 def get_state_int(robot, test_environment):
     target_direction_index = get_target_direction_index(robot, robot.target)
-    borders_touching_index = get_border_touching_index(robot.x, robot.y, test_environment.wide, test_environment.high)
+    borders_touching_index = get_border_touching_index(robot.x, robot.y, robot.facing, test_environment.wide, test_environment.high)
     target_next_to_index = get_target_next_to_index(robot.x, robot.y, robot.target.x, robot.target.y)
     int_string = '%s%s%s%s%s' %(robot.id_number, target_direction_index, borders_touching_index, target_next_to_index, robot.hit_points)
     return int_string
