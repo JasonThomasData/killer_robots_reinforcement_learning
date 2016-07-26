@@ -42,11 +42,11 @@ class KillerBotsScenario(object):
     def check_win_conditions(self, test_environment, robot, config):
         if win_lose_conditions.object_destroyed(robot.target.hit_points) == True:
             robot.result = config.success_string
-            robot.result_value = 2
+            robot.result_value = 1
             test_environment.result_reached = True
         if win_lose_conditions.object_destroyed(robot.hit_points) == True:
             robot.result = 'this_bot_destroyed_by_opponent'
-            robot.result_value = -2
+            robot.result_value = -1
             test_environment.result_reached = True
         if win_lose_conditions.target_reached(robot.x, robot.y, robot.target.x, robot.target.y) == True:
             robot.result = 'bots_collided'
