@@ -27,7 +27,7 @@ At first these results will be poor, but after some time, we can expect the agen
 
 ###Development environment
 
-This project has been tested on Ubuntu 14.04 and Mint _____, and works. I really don't think this project will work on Windows, but haven't tested it on Windows (I don't use Windows sorry).
+This project has been tested on Ubuntu 14.04 and Mint Rosa, and works. I really don't think this project will work on Windows, but haven't tested it on Windows (I don't use Windows sorry).
 
 This project uses Python3.
 
@@ -45,13 +45,15 @@ That spins up python3 inside your virtualenv. If you don't know how to initialis
 
 	source env/bin/activate
 
-Pip will install PyMovie and pytest, and any dependencies those need.
+Now, install py.test:
+    
+    pip install pytest
 
 ###Testing
 
 To run tests for this project, navigate to the tests folder and run this command from the terminal:
 
-	py.test test_robot_sensors.py test_robot_actions.py test_win_lose_conditions.py
+	py.test test_robot_sensors.py test_robot_actions.py test_win_lose_conditions.py test_projectile_behaviour.py
 
 ###Usage
 
