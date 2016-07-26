@@ -102,3 +102,78 @@ def test_direction_buckets_12():
     
 def test_direction_buckets_13():
     assert robot_sensors.get_direction_in_buckets(345) == 338
+
+def test_border_touching_1():
+    assert robot_sensors.get_border_touching_index(1, 0, 'north', 15, 15) == '0010' #ew, ns
+
+def test_border_touching_1_2():
+    assert robot_sensors.get_border_touching_index(0, 1, 'north', 15, 15) == '0001' #ew, ns
+
+def test_border_touching_2():
+    assert robot_sensors.get_border_touching_index(0, 0, 'west', 15, 15) == '1001'
+
+def test_border_touching_2_2():
+    assert robot_sensors.get_border_touching_index(0, 10, 'west', 15, 15) == '1000'
+
+def test_border_touching_3():
+    assert robot_sensors.get_border_touching_index(0, 1, 'south', 15, 15) == '0100'
+
+def test_border_touching_4():
+    assert robot_sensors.get_border_touching_index(0, 13, 'east', 15, 15) == '0010'
+
+def test_border_touching_4_2():
+    assert robot_sensors.get_border_touching_index(0, 14, 'east', 15, 15) == '0011'
+
+def test_border_touching_5():
+    assert robot_sensors.get_border_touching_index(0, 14, 'north', 15, 15) == '1001'
+
+def test_border_touching_6():
+    assert robot_sensors.get_border_touching_index(1, 14, 'west', 15, 15) == '0100'
+
+def test_border_touching_7():
+    assert robot_sensors.get_border_touching_index(13, 14, 'south', 15, 15) == '0010'
+
+def test_border_touching_8():
+    assert robot_sensors.get_border_touching_index(14, 14, 'east', 15, 15) == '1001'
+
+def test_border_touching_9():
+    assert robot_sensors.get_border_touching_index(14, 13, 'north', 15, 15) == '0100'
+
+def test_border_touching_10():
+    assert robot_sensors.get_border_touching_index(13, 13, 'west', 15, 15) == '0000'
+
+def test_border_touching_11():
+    assert robot_sensors.get_border_touching_index(1, 13, 'south', 15, 15) == '0000'
+
+def test_border_touching_12():
+    assert robot_sensors.get_border_touching_index(1, 1, 'east', 15, 15) == '0000'
+
+def test_border_touching_13():
+    assert robot_sensors.get_border_touching_index(13, 1, 'north', 15, 15) == '0000'
+
+def test_target_next_to_1():
+    assert robot_sensors.get_target_next_to_index(3, 3, 3, 4) == 1
+
+def test_target_next_to_2():
+    assert robot_sensors.get_target_next_to_index(3, 3, 4, 4) == 1
+
+def test_target_next_to_3():
+    assert robot_sensors.get_target_next_to_index(3, 3, 4, 5) == 0
+
+def test_target_next_to_4():
+    assert robot_sensors.get_target_next_to_index(3, 3, 3, 5) == 0
+
+def test_target_next_to_5():
+    assert robot_sensors.get_target_next_to_index(2, 7, 2, 2) == 0
+
+def test_target_next_to_6():
+    assert robot_sensors.get_target_next_to_index(2, 7, 2, 9) == 0
+
+def test_target_next_to_7():
+    assert robot_sensors.get_target_next_to_index(2, 7, 2, 8) == 1
+
+def test_target_next_to_8():
+    assert robot_sensors.get_target_next_to_index(2, 7, 2, 6) == 1
+
+def test_target_next_to_9():
+    assert robot_sensors.get_target_next_to_index(2, 7, 6, 6) == 0
