@@ -8,14 +8,12 @@ def remove_destroyed_robots(test_environment):
         if robot.hit_points <= 0:
             if test_environment.canvas != None:
                 test_environment.canvas_shapes_to_remove.append(robot.canvas_shape)
-            test_environment.robots_in_test_environment.remove(robot)
 
 def remove_destroyed_targets(test_environment):
     for target in test_environment.targets_in_test_environment:
         if target.hit_points <= 0:
             if test_environment.canvas != None:
                 test_environment.canvas_shapes_to_remove.append(target.canvas_shape)
-            test_environment.targets_in_test_environment.remove(target)
 
 def end_this_generation(test_environment, database):
     #If there is a canvas, remove it now before next generation
@@ -23,15 +21,18 @@ def end_this_generation(test_environment, database):
         test_environment.generation_animation.destroy()
 
     #All robots update robot memory
+    #If you're wondering, I made the robot's result null on purpose, since None will not be as easy to debug
     for robot in test_environment.robots_in_test_environment:
         print('%s, %s' %(test_environment.generation_number, robot.result))
-        robot_decisions.save_all_states_to_db(test_environment.generation_number, robot, database, test_environment.steps_this_generation)
+        if robot.result != 'null':
+            robot_decisions.save_all_states_to_db(test_environment.generation_number, robot, database, test_environment.steps_this_generation)
 
 def one_moment_in_this_generation(test_environment, config, database, scenario):
     test_environment.steps_this_generation += 1
 
     for robot in test_environment.robots_in_test_environment:
-        state_int, action_this_turn = robot_decisions.take_action(robot, config, database, test_environment)
+        state_int = robot_sensors.get_state_int(robot, test_environment)
+        action_this_turn = robot_decisions.take_action(robot, state_int, config, database, test_environment)
         scenario.check_win_conditions(test_environment, robot, config)
         robot_decisions.create_record(robot, state_int, action_this_turn)
 
