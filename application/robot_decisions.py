@@ -20,14 +20,15 @@ def do_action(robot, action_to_do, config, test_environment):
 def pick_random_action(config):
     return random.choice(config.available_actions)
 
-def take_action(robot, state_int, config, database, test_environment):
+def take_action(robot, config, database, test_environment):
+    state_int = robot_sensors.get_state_int(robot, test_environment)
     if random.random() > config.random_threshold:
         action_to_do = pick_random_action(robot, config)
     else:
         action_to_do = robot_memory.get_best_next_move(config, state_int, database)
     if action_to_do == None:
         action_to_do = pick_random_action(config)
-    return do_action(robot, action_to_do, config, test_environment)
+    return state_int, do_action(robot, action_to_do, config, test_environment)
 
 def create_record(robot, state_int, action_this_turn):
     new_record = {
