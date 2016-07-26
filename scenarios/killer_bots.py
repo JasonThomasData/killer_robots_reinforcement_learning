@@ -51,6 +51,8 @@ class KillerBotsScenario(object):
         if win_lose_conditions.target_reached(robot.x, robot.y, robot.target.x, robot.target.y) == True:
             robot.result = 'bots_collided'
             robot.result_value = -1
+            robot.target.result = 'bots_collided'
+            robot.target.result_value = -1
             test_environment.result_reached = True
         if win_lose_conditions.fall_off_test_area(robot.x, robot.y, test_environment.wide, test_environment.high) == True:
             robot.result = 'this_bot_fell_off'
