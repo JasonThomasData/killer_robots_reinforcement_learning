@@ -1,10 +1,15 @@
 from application import robot_memory
 import math
 
+def get_wins_percentage(wins_this_interval, record_number_per_interval):
+    if record_number_per_interval != 0:
+        return wins_this_interval / record_number_per_interval * 100
+    return 0
+
 def get_statistics_within_record_limit(database, success_string, lower_record_limit, record_number_per_interval):
     upper_record_limit = lower_record_limit + record_number_per_interval
     wins_this_interval = robot_memory.retreive_statistics_all(database, success_string, lower_record_limit, upper_record_limit)
-    wins_percentage = wins_this_interval / record_number_per_interval * 100
+    wins_percentage = get_wins_percentage(wins_this_interval, record_number_per_interval)
     print('%s,%.2f' %(lower_record_limit, wins_percentage))
 
 def make_report(database, success_string):
